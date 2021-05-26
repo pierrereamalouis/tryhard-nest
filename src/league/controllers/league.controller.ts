@@ -12,7 +12,7 @@ import { CreateLeagueDto } from '../dto/create-league.dto';
 import { League } from '../entities/league.entity';
 import { LeagueService } from '../services/league.service';
 
-@Controller('league')
+@Controller('leagues')
 export class LeagueController {
   constructor(private leagueService: LeagueService) {}
 

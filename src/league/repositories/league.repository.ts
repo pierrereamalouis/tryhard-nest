@@ -10,7 +10,7 @@ export class LeagueRepository extends Repository<League> {
     const league = new League();
     league.name = name;
 
-    league.save();
+    await league.save();
 
     return league;
   }
