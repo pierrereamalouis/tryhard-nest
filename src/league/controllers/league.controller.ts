@@ -20,7 +20,7 @@ export class LeagueController {
   constructor(private leagueService: LeagueService) {}
 
   @Get('/:id')
-  getLeagueById(@Param('id', ParseIntPipe) id: number): Promise<League> {
+  getLeagueById(@Param('id', ParseIntPipe) id: string): Promise<League> {
     return this.leagueService.getLeagueById(id);
   }
 

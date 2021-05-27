@@ -12,7 +12,7 @@ export class LeagueService {
     private leagueRepository: LeagueRepository,
   ) {}
 
-  async getLeagueById(id: number): Promise<League> {
+  async getLeagueById(id: string): Promise<League> {
     const found = await this.leagueRepository.findOne(id);
 
     if (!found) {
