@@ -24,6 +24,13 @@ export class Season extends BaseEntity {
   @Column()
   tradeDeadline: Date;
 
-  @OneToMany((type) => Keepers, (keepers) => keepers.season)
+  @OneToMany((type) => Keepers, (keepers) => keepers.season, {
+    cascade: true,
+  })
   keepers: Keepers[];
+
+  @OneToMany((type) => PoolerTeams, (poolerTeams) => poolerTeams.season, {
+    cascade: true,
+  })
+  poolerTeams: PoolerTeams[];
 }
