@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
 import { LeagueModule } from './league/league.module';
+import { PoolModule } from './pool/pool.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { LeagueModule } from './league/league.module';
         }),
     }),
     LeagueModule,
+    PoolModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
