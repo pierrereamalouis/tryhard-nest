@@ -5,11 +5,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
+import { Rules } from './rules.entity';
 
 @Entity()
 export class Season extends BaseEntity {
@@ -37,6 +39,9 @@ export class Season extends BaseEntity {
     cascade: true,
   })
   poolerTeams: PoolerTeams[];
+
+  @ManyToOne((type) => Rules, (rules) => rules.seasons)
+  rules: Rules;
 
   @CreateDateColumn({
     name: 'created_at',
