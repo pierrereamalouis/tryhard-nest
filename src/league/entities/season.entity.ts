@@ -1,10 +1,14 @@
 import { type } from 'os';
+import { Keepers } from 'src/pool/entities/keepers.entity';
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  Timestamp,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -33,4 +37,15 @@ export class Season extends BaseEntity {
     cascade: true,
   })
   poolerTeams: PoolerTeams[];
+
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt: Timestamp;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    nullable: true,
+  })
+  updatedAt: Timestamp;
 }
