@@ -3,12 +3,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Pooler } from './pooler.entity';
 import { Season } from 'src/league/entities/season.entity';
+import { Player } from './player.entity';
 @Entity()
 export class PoolerTeam extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -53,6 +56,10 @@ export class PoolerTeam extends BaseEntity {
     onDelete: 'CASCADE',
   })
   pooler: Pooler;
+
+  @ManyToMany((type) => Player)
+  @JoinTable()
+  players: Player[];
 
   @CreateDateColumn({
     name: 'created_at',

@@ -37,5 +37,9 @@ export class SeasonService {
   async updateSeason(
     id: string,
     updateSeasonDto: UpdateSeasonDto,
-  ): Promise<Season> {}
+  ): Promise<Season> {
+    const season = await this.getSeasonById(id);
+
+    return season;
+  }
 }

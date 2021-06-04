@@ -15,6 +15,12 @@ export class Rules extends BaseEntity {
   id: number;
 
   @Column({
+    type: 'varchar',
+    length: 50,
+  })
+  name: string;
+
+  @Column({
     type: 'integer',
     name: 'max_player_per_team',
   })

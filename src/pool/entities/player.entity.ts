@@ -53,4 +53,29 @@ export class Player extends BaseEntity {
     name: 'birth_date',
   })
   birthDate: string;
+
+  @Column({
+    type: 'integer',
+  })
+  age: number;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+    name: 'birth_city',
+  })
+  birthCity: string;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+    name: 'birth_country',
+  })
+  birthCountry: string;
+
+  @Column({
+    type: 'boolean',
+    name: 'is_rookie',
+  })
+  isRookie: boolean;
 }
