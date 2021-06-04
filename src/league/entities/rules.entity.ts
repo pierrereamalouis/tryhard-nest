@@ -5,7 +5,6 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { Season } from './season.entity';
@@ -69,11 +68,11 @@ export class Rules extends BaseEntity {
   @CreateDateColumn({
     name: 'created_at',
   })
-  createdAt: Timestamp;
+  createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
     nullable: true,
   })
-  updatedAt: Timestamp;
+  updatedAt: Date;
 }

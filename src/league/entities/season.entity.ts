@@ -1,5 +1,3 @@
-import { type } from 'os';
-import { Keepers } from 'src/pool/entities/keepers.entity';
 import {
   BaseEntity,
   Column,
@@ -8,10 +6,12 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { Rules } from './rules.entity';
+import { League } from './league.entity';
+import { Keepers } from 'src/pool/entities/keepers.entity';
+import { PoolerTeam } from 'src/pool/entities/pooler-team.entity';
 
 @Entity()
 export class Season extends BaseEntity {
@@ -21,13 +21,22 @@ export class Season extends BaseEntity {
   @Column()
   year: string;
 
-  @Column()
+  @Column({
+    type: 'timestamptz',
+    name: 'draft_day',
+  })
   draftDay: Date;
 
-  @Column()
+  @Column({
+    type: 'timestamptz',
+    name: 'keepers_deadline',
+  })
   keepersDeadline: Date;
 
-  @Column()
+  @Column({
+    type: 'timestamptz',
+    name: 'trade_deadline',
+  })
   tradeDeadline: Date;
 
   @OneToMany((type) => Keepers, (keepers) => keepers.season, {
@@ -35,22 +44,28 @@ export class Season extends BaseEntity {
   })
   keepers: Keepers[];
 
-  @OneToMany((type) => PoolerTeams, (poolerTeams) => poolerTeams.season, {
+  @OneToMany((type) => PoolerTeam, (poolerTeams) => poolerTeams.season, {
     cascade: true,
   })
-  poolerTeams: PoolerTeams[];
+  poolerTeams: PoolerTeam[];
 
-  @ManyToOne((type) => Rules, (rules) => rules.seasons)
+  @ManyToOne((type) => Rules, (rules) => rules.seasons, {
+    onDelete: 'CASCADE',
+  })
   rules: Rules;
+  @ManyToOne((type) => League, (league) => league.seasons, {
+    onDelete: 'CASCADE',
+  })
+  league: League;
 
   @CreateDateColumn({
     name: 'created_at',
   })
-  createdAt: Timestamp;
+  createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
     nullable: true,
   })
-  updatedAt: Timestamp;
+  updatedAt: Date;
 }

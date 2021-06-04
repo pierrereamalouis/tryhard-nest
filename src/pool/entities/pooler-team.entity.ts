@@ -1,5 +1,14 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Pooler } from './pooler.entity';
+import { Season } from 'src/league/entities/season.entity';
 @Entity()
 export class PoolerTeam extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -10,4 +19,49 @@ export class PoolerTeam extends BaseEntity {
     length: 50,
   })
   name: string;
+
+  @Column({
+    type: 'integer',
+    name: 'number_of_players',
+  })
+  numberOfPlayers: number;
+
+  @Column({
+    type: 'integer',
+    name: 'number_of_forwards',
+  })
+  numberOfForwards: number;
+
+  @Column({
+    type: 'integer',
+    name: 'number_of_defensemen',
+  })
+  numberOfDefensemen: number;
+
+  @Column({
+    type: 'integer',
+    name: 'number_of_goalies',
+  })
+  numberOfGoalies: number;
+
+  @ManyToOne((type) => Season, (season) => season.poolerTeams, {
+    onDelete: 'CASCADE',
+  })
+  season: Season;
+
+  @ManyToOne((type) => Pooler, (pooler) => pooler.poolerTeams, {
+    onDelete: 'CASCADE',
+  })
+  pooler: Pooler;
+
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    nullable: true,
+  })
+  updatedAt: Date;
 }

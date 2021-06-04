@@ -1,4 +1,3 @@
-import { Pooler } from 'src/pool/entities/pooler.entity';
 import {
   BaseEntity,
   Column,
@@ -9,6 +8,8 @@ import {
   Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
+import { Season } from './season.entity';
+import { Pooler } from 'src/pool/entities/pooler.entity';
 
 @Entity()
 export class League extends BaseEntity {
@@ -21,17 +22,24 @@ export class League extends BaseEntity {
   })
   name: string;
 
-  @OneToMany((type) => Pooler, (pooler) => pooler.league)
-  poolers: Pooler;
+  @OneToMany((type) => Pooler, (pooler) => pooler.league, {
+    cascade: true,
+  })
+  poolers: Pooler[];
+
+  @OneToMany((type) => Season, (season) => season.league, {
+    cascade: true,
+  })
+  seasons: Season[];
 
   @CreateDateColumn({
     name: 'created_at',
   })
-  createdAt: Timestamp;
+  createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
     nullable: true,
   })
-  updatedAt: Timestamp;
+  updatedAt: Date;
 }
