@@ -1,6 +1,7 @@
 import { IsArray, IsDate, IsNotEmpty, Matches } from 'class-validator';
 import { Keepers } from 'src/pool/entities/keepers.entity';
 import { PoolerTeam } from 'src/pool/entities/pooler-team.entity';
+import { League } from '../entities/league.entity';
 
 export class CreateSeasonDto {
   @IsNotEmpty()
@@ -19,9 +20,6 @@ export class CreateSeasonDto {
   @IsDate()
   tradeDeadline: Date;
 
-  @IsArray()
-  keepers: Keepers[];
-
-  @IsArray()
-  poolerTeams: PoolerTeam[];
+  @IsNotEmpty()
+  league: League;
 }
