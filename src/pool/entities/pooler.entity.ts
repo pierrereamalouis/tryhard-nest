@@ -8,9 +8,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Keepers } from './keepers.entity';
 import { League } from 'src/league/entities/league.entity';
 import { PoolerTeam } from './pooler-team.entity';
+import { Keepers } from './keepers.entity';
 @Entity()
 export class Pooler extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -24,6 +24,7 @@ export class Pooler extends BaseEntity {
 
   @ManyToOne((type) => League, (league) => league.poolers, {
     onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   league: League;
 

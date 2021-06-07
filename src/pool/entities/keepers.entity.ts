@@ -2,10 +2,10 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -13,6 +13,7 @@ import { Pooler } from './pooler.entity';
 import { Season } from 'src/league/entities/season.entity';
 import { Player } from './player.entity';
 
+@Entity()
 export class Keepers extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,11 +24,15 @@ export class Keepers extends BaseEntity {
   })
   numberOfPlayers: number;
 
-  @ManyToOne((type) => Season, (season) => season.keepers)
+  @ManyToOne((type) => Season, (season) => season.keepers, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   season: Season;
 
   @ManyToOne((type) => Pooler, (pooler) => pooler.keepers, {
     onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   pooler: Pooler;
 

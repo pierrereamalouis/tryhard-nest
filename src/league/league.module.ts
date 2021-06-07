@@ -7,19 +7,17 @@ import { SeasonController } from './controllers/season.controller';
 import { SeasonService } from './services/season.service';
 import { SeasonRepository } from './repositories/season.repository';
 import { Keepers } from 'src/pool/entities/keepers.entity';
-import { PoolerTeam } from 'src/pool/entities/pooler-team.entity';
-import { Pooler } from 'src/pool/entities/pooler.entity';
-import { Player } from 'src/pool/entities/player.entity';
+import { PoolModule } from 'src/pool/pool.module';
+import { Season } from './entities/season.entity';
+import { RulesRepository } from './repositories/rules.repository';
 
 @Module({
   imports: [
+    PoolModule,
     TypeOrmModule.forFeature([
       LeagueRepository,
       SeasonRepository,
-      Keepers,
-      PoolerTeam,
-      Pooler,
-      Player,
+      RulesRepository,
     ]),
   ],
   controllers: [LeagueController, SeasonController],

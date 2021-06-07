@@ -51,11 +51,13 @@ export class Season extends BaseEntity {
 
   @ManyToOne((type) => Rules, (rules) => rules.seasons, {
     onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   rules: Rules;
 
   @ManyToOne((type) => League, (league) => league.seasons, {
     onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   league: League;
 
