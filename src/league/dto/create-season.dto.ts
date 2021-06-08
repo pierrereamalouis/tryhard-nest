@@ -1,25 +1,24 @@
-import { IsArray, IsDate, IsNotEmpty, Matches } from 'class-validator';
-import { League } from '../entities/league.entity';
+import { IsNotEmpty, IsString, Matches } from 'class-validator';
 
 export class CreateSeasonDto {
   @IsNotEmpty()
   @Matches(/^\d{4}-\d{4}$/)
+  @IsString()
   year: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsString()
   draftDay: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsString()
   keepersDeadline: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsString()
   tradeDeadline: string;
 
   @IsNotEmpty()
+  @IsString()
   leagueId: string;
-
-  league: League;
 }

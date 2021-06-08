@@ -6,14 +6,17 @@ import { LeagueRepository } from './league.repository';
 
 @EntityRepository(Season)
 export class SeasonRepository extends Repository<Season> {
-  constructor(
-    @InjectRepository(LeagueRepository)
-    private leagueRepository: LeagueRepository,
-  ) {
-    super();
-  }
+  // constructor(
+  //   @InjectRepository(LeagueRepository)
+  //   private leagueRepository: LeagueRepository,
+  // ) {
+  //   super();
+  // }
 
-  async createSeason(createSeasonDto: CreateSeasonDto): Promise<Season> {
+  async createSeason(
+    createSeasonDto: CreateSeasonDto,
+    leagueRepository: LeagueRepository,
+  ): Promise<Season> {
     const { year, draftDay, keepersDeadline, tradeDeadline, leagueId } =
       createSeasonDto;
 
@@ -23,7 +26,7 @@ export class SeasonRepository extends Repository<Season> {
     season.keepersDeadline = new Date(keepersDeadline);
     season.tradeDeadline = new Date(tradeDeadline);
 
-    season.league = await this.leagueRepository.findOne(leagueId);
+    season.league = await leagueRepository.findOne(leagueId);
 
     await season.save();
 

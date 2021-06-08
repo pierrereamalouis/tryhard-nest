@@ -16,7 +16,7 @@ export class LeagueService {
     const found = await this.leagueRepository.findOne(id);
 
     if (!found) {
-      throw new NotFoundException(`League with ID ${id} no found`);
+      throw new NotFoundException(`League with ID ${id} not found`);
     }
 
     return found;
