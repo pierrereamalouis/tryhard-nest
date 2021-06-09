@@ -45,6 +45,15 @@ export class SeasonService {
   ): Promise<Season> {
     const season = await this.getSeasonById(id);
 
+    // update fields only with not null value
+    for (let key in updateSeasonDto) {
+      if (updateSeasonDto[key] !== null && updateSeasonDto[key] !== '') {
+        season[key] = updateSeasonDto[key];
+      }
+    }
+
+    await this.seasonRepository.save(season);
+
     return season;
   }
 }

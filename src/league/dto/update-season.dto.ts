@@ -1,31 +1,19 @@
-import { IsNotEmpty, Matches, IsDate, IsArray } from 'class-validator';
-import { Keepers } from 'src/pool/entities/keepers.entity';
-import { PoolerTeam } from 'src/pool/entities/pooler-team.entity';
-import { League } from '../entities/league.entity';
+import { Matches, IsDate, IsArray, IsString } from 'class-validator';
 
 export class UpdateSeasonDto {
-  @IsNotEmpty()
   @Matches(/^\d{4}-\d{4}$/)
+  @IsString()
   year: string;
 
-  @IsNotEmpty()
-  @IsDate()
-  draftDay: Date;
+  @IsString()
+  draftDay: string;
 
-  @IsNotEmpty()
-  @IsDate()
-  keepersDeadline: Date;
+  @IsString()
+  keepersDeadline: string;
 
-  @IsNotEmpty()
-  @IsDate()
-  tradeDeadline: Date;
+  @IsString()
+  tradeDeadline: string;
 
-  @IsNotEmpty()
-  league: League;
-
-  @IsArray()
-  keepers: Keepers[];
-
-  @IsArray()
-  poolerTeams: PoolerTeam[];
+  @IsString()
+  leagueId: string;
 }

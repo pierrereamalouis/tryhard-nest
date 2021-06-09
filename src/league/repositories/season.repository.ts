@@ -6,13 +6,6 @@ import { LeagueRepository } from './league.repository';
 
 @EntityRepository(Season)
 export class SeasonRepository extends Repository<Season> {
-  // constructor(
-  //   @InjectRepository(LeagueRepository)
-  //   private leagueRepository: LeagueRepository,
-  // ) {
-  //   super();
-  // }
-
   async createSeason(
     createSeasonDto: CreateSeasonDto,
     leagueRepository: LeagueRepository,
