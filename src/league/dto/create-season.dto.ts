@@ -21,4 +21,8 @@ export class CreateSeasonDto {
   @IsNotEmpty()
   @IsString()
   leagueId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  rulesId: string;
 }

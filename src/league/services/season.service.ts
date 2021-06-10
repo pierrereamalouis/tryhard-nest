@@ -5,6 +5,7 @@ import { SeasonRepository } from '../repositories/season.repository';
 import { UpdateSeasonDto } from '../dto/update-season.dto';
 import { Season } from '../entities/season.entity';
 import { LeagueRepository } from '../repositories/league.repository';
+import { RulesRepository } from '../repositories/rules.repository';
 
 @Injectable()
 export class SeasonService {
@@ -12,7 +13,13 @@ export class SeasonService {
     @InjectRepository(SeasonRepository)
     private seasonRepository: SeasonRepository,
     private leagueRepository: LeagueRepository,
+    private rulesRepository: RulesRepository,
   ) {}
+
+  private repos = {
+    leagueRepository: this.leagueRepository,
+    rulesRepository: this.rulesRepository,
+  };
 
   async getSeasonById(id: string): Promise<Season> {
     const found = await this.seasonRepository.findOne(id);
@@ -25,10 +32,7 @@ export class SeasonService {
   }
 
   async createSeason(createSeasonDto: CreateSeasonDto): Promise<Season> {
-    return this.seasonRepository.createSeason(
-      createSeasonDto,
-      this.leagueRepository,
-    );
+    return this.seasonRepository.createSeason(createSeasonDto, this.repos);
   }
 
   async deleteSeason(id: string): Promise<void> {

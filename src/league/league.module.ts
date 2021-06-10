@@ -8,6 +8,8 @@ import { SeasonService } from './services/season.service';
 import { SeasonRepository } from './repositories/season.repository';
 import { PoolModule } from 'src/pool/pool.module';
 import { RulesRepository } from './repositories/rules.repository';
+import { RulesService } from './services/rules.service';
+import { RulesController } from './controllers/rules.controller';
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { RulesRepository } from './repositories/rules.repository';
       RulesRepository,
     ]),
   ],
-  controllers: [LeagueController, SeasonController],
-  providers: [LeagueService, SeasonService],
+  controllers: [LeagueController, SeasonController, RulesController],
+  providers: [LeagueService, SeasonService, RulesService],
 })
 export class LeagueModule {}

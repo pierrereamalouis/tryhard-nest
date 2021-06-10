@@ -17,6 +17,7 @@ export class Rules extends BaseEntity {
   @Column({
     type: 'varchar',
     length: 50,
+    unique: true,
   })
   name: string;
 
