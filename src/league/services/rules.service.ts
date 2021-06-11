@@ -42,4 +42,12 @@ export class RulesService {
 
     return rules;
   }
+
+  async deleteRules(id: string): Promise<void> {
+    const result = await this.rulesRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Rules with ID ${id} not found`);
+    }
+  }
 }

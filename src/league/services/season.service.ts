@@ -39,7 +39,7 @@ export class SeasonService {
     const result = await this.seasonRepository.delete(id);
 
     if (result.affected === 0) {
-      throw new NotFoundException(`Season with ID ${id} no found`);
+      throw new NotFoundException(`Season with ID ${id} not found`);
     }
   }
 

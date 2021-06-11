@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -35,5 +36,10 @@ export class RulesController {
     @Body() updateRulesDto: UpdateRulesDto,
   ): Promise<Rules> {
     return this.rulesService.updateRules(id, updateRulesDto);
+  }
+
+  @Delete(':id')
+  deleteRules(@Param('id') id: string): Promise<void> {
+    return this.rulesService.deleteRules(id);
   }
 }
