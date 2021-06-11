@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRulesDto } from '../dto/create-rules.dto';
+import { UpdateRulesDto } from '../dto/update-rules.dto';
 import { Rules } from '../entities/rules.entity';
 import { RulesRepository } from '../repositories/rules.repository';
 
@@ -23,5 +24,22 @@ export class RulesService {
 
   async createRules(createRulesDto: CreateRulesDto): Promise<Rules> {
     return this.rulesRepository.createRules(createRulesDto);
+  }
+
+  async updateRules(
+    id: string,
+    updateRulesDto: UpdateRulesDto,
+  ): Promise<Rules> {
+    const rules = await this.getRulesById(id);
+
+    for (let key in updateRulesDto) {
+      if (updateRulesDto[key] !== null && updateRulesDto[key] !== '') {
+        rules[key] = updateRulesDto[key];
+      }
+    }
+
+    await this.rulesRepository.save(rules);
+
+    return rules;
   }
 }

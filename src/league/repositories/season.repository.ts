@@ -17,6 +17,7 @@ export class SeasonRepository extends Repository<Season> {
       rulesId,
     } = createSeasonDto;
 
+    // not looping through createSeasonDto because it doesn't quite match Season Entity properties (leagueId and rulesId)
     const season = new Season();
     season.year = year;
     season.draftDay = new Date(draftDay);

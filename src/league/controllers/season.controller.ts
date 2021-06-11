@@ -30,16 +30,16 @@ export class SeasonController {
     return this.seasonService.createSeason(createSeasonDto);
   }
 
-  @Delete(':id')
-  deleteSeason(@Param('id') id: string): Promise<void> {
-    return this.seasonService.deleteSeason(id);
-  }
-
   @Patch(':id')
   updateSeason(
     @Param('id') id: string,
     @Body() updateSeasonDto: UpdateSeasonDto,
   ): Promise<Season> {
     return this.seasonService.updateSeason(id, updateSeasonDto);
+  }
+
+  @Delete(':id')
+  deleteSeason(@Param('id') id: string): Promise<void> {
+    return this.seasonService.deleteSeason(id);
   }
 }
