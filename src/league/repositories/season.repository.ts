@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { CreateSeasonDto } from '../dto/create-season.dto';
 import { Season } from '../entities/season.entity';
 import { leagueRules } from '../interfaces/leagueRules.interface';
+import mapEntityKeys from '../utils/entity.utils';
 @EntityRepository(Season)
 export class SeasonRepository extends Repository<Season> {
   async createSeason(
@@ -19,16 +20,19 @@ export class SeasonRepository extends Repository<Season> {
 
     // not looping through createSeasonDto because it doesn't quite match Season Entity properties (leagueId and rulesId)
     const season = new Season();
-    season.year = year;
-    season.draftDay = new Date(draftDay);
-    season.keepersDeadline = new Date(keepersDeadline);
-    season.tradeDeadline = new Date(tradeDeadline);
+    // season.year = year;
+    // season.draftDay = new Date(draftDay);
+    // season.keepersDeadline = new Date(keepersDeadline);
+    // season.tradeDeadline = new Date(tradeDeadline);
 
     season.league = await repos.leagueRepository.findOne(leagueId);
     season.rules = await repos.rulesRepository.findOne(rulesId);
 
-    await season.save();
+    const createdSeason = mapEntityKeys<Season, CreateSeasonDto>(season, createSeasonDto);
 
-    return season;
+
+    await createdSeason.save();
+
+    return createdSeason;
   }
 }

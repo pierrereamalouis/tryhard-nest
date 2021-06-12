@@ -4,6 +4,7 @@ import { CreateRulesDto } from '../dto/create-rules.dto';
 import { UpdateRulesDto } from '../dto/update-rules.dto';
 import { Rules } from '../entities/rules.entity';
 import { RulesRepository } from '../repositories/rules.repository';
+import mapEntityKeys from '../utils/entity.utils';
 
 @Injectable()
 export class RulesService {
@@ -32,15 +33,10 @@ export class RulesService {
   ): Promise<Rules> {
     const rules = await this.getRulesById(id);
 
-    for (let key in updateRulesDto) {
-      if (updateRulesDto[key] !== null && updateRulesDto[key] !== '') {
-        rules[key] = updateRulesDto[key];
-      }
-    }
+    const updatedRules = mapEntityKeys<Rules, UpdateRulesDto>(rules, updateRulesDto);
+    await this.rulesRepository.save(updatedRules);
 
-    await this.rulesRepository.save(rules);
-
-    return rules;
+    return updatedRules;
   }
 
   async deleteRules(id: string): Promise<void> {
