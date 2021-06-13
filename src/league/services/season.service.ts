@@ -6,6 +6,7 @@ import { UpdateSeasonDto } from '../dto/update-season.dto';
 import { Season } from '../entities/season.entity';
 import { LeagueRepository } from '../repositories/league.repository';
 import { RulesRepository } from '../repositories/rules.repository';
+import mapDtoToEntity from '../utils/entity.utils';
 
 @Injectable()
 export class SeasonService {
@@ -49,15 +50,22 @@ export class SeasonService {
   ): Promise<Season> {
     const season = await this.getSeasonById(id);
 
-    // update fields only with not null value
-    for (let key in updateSeasonDto) {
-      if (updateSeasonDto[key] !== null && updateSeasonDto[key] !== '') {
-        season[key] = updateSeasonDto[key];
-      }
+    const { leagueId, rulesId } = updateSeasonDto;
+
+    if (leagueId) {
+      season.league = await this.leagueRepository.findOne(leagueId);
     }
 
-    await this.seasonRepository.save(season);
+    if (rulesId) {
+      season.rules = await this.rulesRepository.findOne(rulesId);
+    }
 
-    return season;
+    const updatedSeason = mapDtoToEntity<Season, UpdateSeasonDto>(
+      season,
+      updateSeasonDto,
+    );
+    await this.seasonRepository.save(updatedSeason);
+
+    return updatedSeason;
   }
 }

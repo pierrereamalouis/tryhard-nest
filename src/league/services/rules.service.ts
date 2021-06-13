@@ -4,7 +4,7 @@ import { CreateRulesDto } from '../dto/create-rules.dto';
 import { UpdateRulesDto } from '../dto/update-rules.dto';
 import { Rules } from '../entities/rules.entity';
 import { RulesRepository } from '../repositories/rules.repository';
-import mapEntityKeys from '../utils/entity.utils';
+import mapDtoToEntity from '../utils/entity.utils';
 
 @Injectable()
 export class RulesService {
@@ -33,7 +33,10 @@ export class RulesService {
   ): Promise<Rules> {
     const rules = await this.getRulesById(id);
 
-    const updatedRules = mapEntityKeys<Rules, UpdateRulesDto>(rules, updateRulesDto);
+    const updatedRules = mapDtoToEntity<Rules, UpdateRulesDto>(
+      rules,
+      updateRulesDto,
+    );
     await this.rulesRepository.save(updatedRules);
 
     return updatedRules;

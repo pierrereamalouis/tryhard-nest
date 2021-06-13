@@ -50,7 +50,7 @@ export class Season extends BaseEntity {
   poolerTeams: PoolerTeam[];
 
   @ManyToOne((type) => Rules, (rules) => rules.seasons, {
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   rules: Rules;

@@ -16,4 +16,7 @@ export class UpdateSeasonDto {
 
   @IsString()
   leagueId: string;
+
+  @IsString()
+  rulesId: string;
 }
