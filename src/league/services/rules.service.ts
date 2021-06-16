@@ -4,7 +4,7 @@ import { CreateRulesDto } from '../dto/create-rules.dto';
 import { UpdateRulesDto } from '../dto/update-rules.dto';
 import { Rules } from '../entities/rules.entity';
 import { RulesRepository } from '../repositories/rules.repository';
-import mapDtoToEntity from '../utils/entity.utils';
+import mapDtoToEntity from '../../utils/entity.utils';
 
 @Injectable()
 export class RulesService {

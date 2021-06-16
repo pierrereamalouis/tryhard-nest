@@ -1,13 +1,13 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateSeasonDto } from '../dto/create-season.dto';
 import { Season } from '../entities/season.entity';
-import { leagueRules } from '../interfaces/leagueRules.interface';
-import mapDtoToEntity from '../utils/entity.utils';
+import { Repos } from '../../interfaces/repos.interface';
+import mapDtoToEntity from '../../utils/entity.utils';
 @EntityRepository(Season)
 export class SeasonRepository extends Repository<Season> {
   async createSeason(
     createSeasonDto: CreateSeasonDto,
-    repos: leagueRules,
+    repos: Repos,
   ): Promise<Season> {
     const { leagueId, rulesId } = createSeasonDto;
 

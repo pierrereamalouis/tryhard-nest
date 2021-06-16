@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateRulesDto } from '../dto/create-rules.dto';
 import { Rules } from '../entities/rules.entity';
-import mapDtoToEntity from '../utils/entity.utils';
+import mapDtoToEntity from '../../utils/entity.utils';
 
 @EntityRepository(Rules)
 export class RulesRepository extends Repository<Rules> {

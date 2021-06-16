@@ -6,7 +6,7 @@ import { UpdateSeasonDto } from '../dto/update-season.dto';
 import { Season } from '../entities/season.entity';
 import { LeagueRepository } from '../repositories/league.repository';
 import { RulesRepository } from '../repositories/rules.repository';
-import mapDtoToEntity from '../utils/entity.utils';
+import mapDtoToEntity from '../../utils/entity.utils';
 
 @Injectable()
 export class SeasonService {
