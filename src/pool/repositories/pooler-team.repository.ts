@@ -18,7 +18,7 @@ export class PoolerTeamRepository extends Repository<PoolerTeam> {
     );
 
     poolerTeam.season = await repos.seasonRepository.findOne(seasonId);
-    poolerTeam.pooler = await repos.playerRepository.findOne(poolerId);
+    poolerTeam.pooler = await repos.poolerRepository.findOne(poolerId);
 
     await poolerTeam.save();
 

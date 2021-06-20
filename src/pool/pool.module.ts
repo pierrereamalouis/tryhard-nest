@@ -12,6 +12,8 @@ import { PoolerService } from './services/pooler.service';
 import { PoolerTeamService } from './services/pooler-team.service';
 import { KeepersService } from './services/keepers.service';
 import { PlayerService } from './services/player.service';
+import { LeagueRepository } from 'src/league/repositories/league.repository';
+import { SeasonRepository } from 'src/league/repositories/season.repository';
 
 @Module({
   imports: [
@@ -20,9 +22,16 @@ import { PlayerService } from './services/player.service';
       KeepersRepository,
       PoolerTeamRepository,
       PlayerRepository,
+      LeagueRepository,
+      SeasonRepository,
     ]),
   ],
-  controllers: [PoolerController, PoolerTeamController, KeepersController, PlayerController],
+  controllers: [
+    PoolerController,
+    PoolerTeamController,
+    KeepersController,
+    PlayerController,
+  ],
   providers: [PoolerService, PoolerTeamService, KeepersService, PlayerService],
 })
 export class PoolModule {}

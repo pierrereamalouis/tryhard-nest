@@ -26,7 +26,7 @@ export class SeasonService {
     const found = await this.seasonRepository.findOne(id);
 
     if (!found) {
-      throw new NotFoundException(`Season with ID ${id} no found`);
+      throw new NotFoundException(`Season with ID ${id} not found`);
     }
 
     return found;

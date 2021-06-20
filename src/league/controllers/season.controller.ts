@@ -31,6 +31,7 @@ export class SeasonController {
   }
 
   @Patch(':id')
+  @UsePipes(ValidationPipe)
   updateSeason(
     @Param('id') id: string,
     @Body() updateSeasonDto: UpdateSeasonDto,
