@@ -39,23 +39,23 @@ export class Season extends BaseEntity {
   })
   tradeDeadline: Date;
 
-  @OneToMany((type) => Keepers, (keepers) => keepers.season, {
+  @OneToMany(() => Keepers, (keepers) => keepers.season, {
     cascade: true,
   })
   keepers: Keepers[];
 
-  @OneToMany((type) => PoolerTeam, (poolerTeams) => poolerTeams.season, {
+  @OneToMany(() => PoolerTeam, (poolerTeams) => poolerTeams.season, {
     cascade: true,
   })
   poolerTeams: PoolerTeam[];
 
-  @ManyToOne((type) => Rules, (rules) => rules.seasons, {
+  @ManyToOne(() => Rules, (rules) => rules.seasons, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   rules: Rules;
 
-  @ManyToOne((type) => League, (league) => league.seasons, {
+  @ManyToOne(() => League, (league) => league.seasons, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

@@ -38,7 +38,7 @@ export class PoolerService {
     const { name, leagueId } = updatePoolerDto;
 
     if (leagueId) {
-      pooler.league = await this.leagueRepository.findOne(leagueId);
+      const league = await this.leagueRepository.findOne(leagueId);
     }
 
     pooler.name = name;

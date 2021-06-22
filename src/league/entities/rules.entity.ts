@@ -69,7 +69,7 @@ export class Rules extends BaseEntity {
   })
   pointsPerShutout: number;
 
-  @OneToMany((type) => Season, (season) => season.rules, {
+  @OneToMany(() => Season, (season) => season.rules, {
     cascade: true,
   })
   seasons: Season[];

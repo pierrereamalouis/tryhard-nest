@@ -22,18 +22,12 @@ export class Pooler extends BaseEntity {
   })
   name: string;
 
-  @ManyToOne((type) => League, (league) => league.poolers, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  league: League;
-
-  @OneToMany((type) => Keepers, (keepers) => keepers.pooler, {
+  @OneToMany(() => Keepers, (keepers) => keepers.pooler, {
     cascade: true,
   })
   keepers: Keepers[];
 
-  @OneToMany((type) => PoolerTeam, (poolerTeams) => poolerTeams.pooler, {
+  @OneToMany(() => PoolerTeam, (poolerTeams) => poolerTeams.pooler, {
     cascade: true,
   })
   poolerTeams: PoolerTeam[];

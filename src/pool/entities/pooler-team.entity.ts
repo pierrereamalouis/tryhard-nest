@@ -47,17 +47,17 @@ export class PoolerTeam extends BaseEntity {
   })
   numberOfGoalies: number;
 
-  @ManyToOne((type) => Season, (season) => season.poolerTeams, {
+  @ManyToOne(() => Season, (season) => season.poolerTeams, {
     onDelete: 'CASCADE',
   })
   season: Season;
 
-  @ManyToOne((type) => Pooler, (pooler) => pooler.poolerTeams, {
+  @ManyToOne(() => Pooler, (pooler) => pooler.poolerTeams, {
     onDelete: 'CASCADE',
   })
   pooler: Pooler;
 
-  @ManyToMany((type) => Player)
+  @ManyToMany(() => Player)
   @JoinTable()
   players: Player[];
 
