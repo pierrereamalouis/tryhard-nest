@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -19,8 +20,15 @@ export class Pooler extends BaseEntity {
   @Column({
     type: 'varchar',
     length: 50,
+    unique: true,
   })
   name: string;
+
+  @Column({
+    type: 'varchar',
+    unique: true,
+  })
+  email: string;
 
   @OneToMany(() => Keepers, (keepers) => keepers.pooler, {
     cascade: true,
@@ -31,6 +39,9 @@ export class Pooler extends BaseEntity {
     cascade: true,
   })
   poolerTeams: PoolerTeam[];
+
+  @ManyToMany(() => League, (league) => league.poolers)
+  leagues: League[];
 
   @CreateDateColumn({
     name: 'created_at',

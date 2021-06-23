@@ -57,7 +57,9 @@ export class PoolerTeam extends BaseEntity {
   })
   pooler: Pooler;
 
-  @ManyToMany(() => Player)
+  @ManyToMany(() => Player, (player) => player.poolerTeams, {
+    cascade: true,
+  })
   @JoinTable()
   players: Player[];
 

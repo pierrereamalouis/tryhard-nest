@@ -7,7 +7,6 @@ import {
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { Season } from './season.entity';
@@ -24,7 +23,7 @@ export class League extends BaseEntity {
   })
   name: string;
 
-  @ManyToMany(() => Pooler, {
+  @ManyToMany(() => Pooler, (pooler) => pooler.leagues, {
     cascade: true,
   })
   @JoinTable()

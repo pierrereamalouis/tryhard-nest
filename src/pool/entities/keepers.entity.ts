@@ -25,18 +25,20 @@ export class Keepers extends BaseEntity {
   numberOfPlayers: number;
 
   @ManyToOne(() => Season, (season) => season.keepers, {
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   season: Season;
 
   @ManyToOne(() => Pooler, (pooler) => pooler.keepers, {
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   pooler: Pooler;
 
-  @ManyToMany(() => Player)
+  @ManyToMany(() => Player, (player) => player.keepers, {
+    cascade: true,
+  })
   @JoinTable()
   players: Player[];
 
