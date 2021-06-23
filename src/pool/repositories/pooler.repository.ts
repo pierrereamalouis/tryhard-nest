@@ -17,9 +17,11 @@ export class PoolerRepository extends Repository<Pooler> {
       createPoolerDto,
     );
 
-    pooler.league = await repos.leagueRepository.findOne(leagueId);
-
     await pooler.save();
+
+    const league = await repos.leagueRepository.findOne(leagueId);
+    league.poolers.push(pooler);
+    await repos.leagueRepository.save(league);
 
     return pooler;
   }

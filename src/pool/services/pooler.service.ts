@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repos } from 'src/interfaces/repos.interface';
 import { LeagueRepository } from 'src/league/repositories/league.repository';
+import mapDtoToEntity from 'src/utils/entity.utils';
 import { CreatePoolerDto } from '../dto/create-pooler.dto';
 import { UpdatePoolerDto } from '../dto/update-pooler.dto';
 import { Pooler } from '../entities/pooler.entity';
@@ -35,17 +36,13 @@ export class PoolerService {
   async updatePooler(id: string, updatePoolerDto: UpdatePoolerDto) {
     const pooler = await this.getPoolerById(id);
 
-    const { name, leagueId } = updatePoolerDto;
+    const updatedPooler = mapDtoToEntity<Pooler, CreatePoolerDto>(
+      pooler,
+      updatePoolerDto,
+    );
+    await this.poolerRepository.save(updatedPooler);
 
-    if (leagueId) {
-      pooler.league = await this.leagueRepository.findOne(leagueId);
-    }
-
-    pooler.name = name;
-
-    await this.poolerRepository.save(pooler);
-
-    return pooler;
+    return updatedPooler;
   }
 
   async deletePooler(id: string): Promise<void> {

@@ -3,9 +3,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { Season } from './season.entity';
@@ -22,12 +23,13 @@ export class League extends BaseEntity {
   })
   name: string;
 
-  @OneToMany((type) => Pooler, (pooler) => pooler.league, {
+  @ManyToMany(() => Pooler, (pooler) => pooler.leagues, {
     cascade: true,
   })
+  @JoinTable()
   poolers: Pooler[];
 
-  @OneToMany((type) => Season, (season) => season.league, {
+  @OneToMany(() => Season, (season) => season.league, {
     cascade: true,
   })
   seasons: Season[];

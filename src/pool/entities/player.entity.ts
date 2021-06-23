@@ -1,4 +1,14 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Keepers } from './keepers.entity';
+import { PoolerTeam } from './pooler-team.entity';
 
 @Entity()
 export class Player extends BaseEntity {
@@ -78,4 +88,21 @@ export class Player extends BaseEntity {
     name: 'is_rookie',
   })
   isRookie: boolean;
+
+  @ManyToMany(() => PoolerTeam, (poolerTeam) => poolerTeam.players)
+  poolerTeams: PoolerTeam[];
+
+  @ManyToMany(() => Keepers, (keepers) => keepers.players)
+  keepers: Keepers[];
+
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    nullable: true,
+  })
+  updatedAt: Date;
 }
