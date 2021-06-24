@@ -62,7 +62,7 @@ export class PoolerTeamService {
       updatePoolerTeamDto,
     );
 
-    await this.poolerTeamRepository.save(updatePoolerTeamDto);
+    await this.poolerTeamRepository.save(updatedPoolerTeam);
 
     return updatedPoolerTeam;
   }
