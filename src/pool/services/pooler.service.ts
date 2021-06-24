@@ -36,7 +36,7 @@ export class PoolerService {
   async updatePooler(id: string, updatePoolerDto: UpdatePoolerDto) {
     const pooler = await this.getPoolerById(id);
 
-    const updatedPooler = mapDtoToEntity<Pooler, CreatePoolerDto>(
+    const updatedPooler = mapDtoToEntity<Pooler, UpdatePoolerDto>(
       pooler,
       updatePoolerDto,
     );

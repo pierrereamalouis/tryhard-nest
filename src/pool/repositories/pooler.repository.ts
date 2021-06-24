@@ -19,13 +19,11 @@ export class PoolerRepository extends Repository<Pooler> {
 
     await pooler.save();
 
-    let poolersArr: Array<Pooler> = [];
+    const league = await repos.leagueRepository.findOne(leagueId, {
+      relations: ['poolers'],
+    });
 
-    const league = await repos.leagueRepository.findOne(leagueId);
-    poolersArr = league.poolers;
-
-    poolersArr.push(pooler);
-    league.poolers = poolersArr;
+    league.poolers.push(pooler);
 
     await repos.leagueRepository.save(league);
 

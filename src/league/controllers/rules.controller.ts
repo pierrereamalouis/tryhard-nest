@@ -7,8 +7,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreateRulesDto } from '../dto/create-rules.dto';
 import { UpdateRulesDto } from '../dto/update-rules.dto';
@@ -25,7 +23,6 @@ export class RulesController {
   }
 
   @Post()
-  @UsePipes(ValidationPipe)
   createRules(@Body() createRulesDto: CreateRulesDto): Promise<Rules> {
     return this.rulesService.createRules(createRulesDto);
   }

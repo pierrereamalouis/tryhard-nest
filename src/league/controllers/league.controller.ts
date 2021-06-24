@@ -7,8 +7,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreateLeagueDto } from '../dto/create-league.dto';
 import { UpdateLeagueDto } from '../dto/update-league.dto';
@@ -25,7 +23,6 @@ export class LeagueController {
   }
 
   @Post()
-  @UsePipes(ValidationPipe)
   createLeague(@Body() createLeagueDto: CreateLeagueDto): Promise<League> {
     return this.leagueService.createLeague(createLeagueDto);
   }

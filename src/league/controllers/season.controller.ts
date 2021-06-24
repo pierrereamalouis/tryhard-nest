@@ -7,8 +7,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreateSeasonDto } from '../dto/create-season.dto';
 import { UpdateSeasonDto } from '../dto/update-season.dto';
@@ -25,13 +23,11 @@ export class SeasonController {
   }
 
   @Post()
-  @UsePipes(ValidationPipe)
   createSeason(@Body() createSeasonDto: CreateSeasonDto): Promise<Season> {
     return this.seasonService.createSeason(createSeasonDto);
   }
 
   @Patch(':id')
-  @UsePipes(ValidationPipe)
   updateSeason(
     @Param('id') id: string,
     @Body() updateSeasonDto: UpdateSeasonDto,
