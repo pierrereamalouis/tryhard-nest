@@ -14,8 +14,8 @@ export class CreatePlayerDto {
   position: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  jerseyNumber: number;
+  @IsString()
+  jerseyNumber: string;
 
   @IsNotEmpty()
   @IsString()
@@ -35,8 +35,8 @@ export class CreatePlayerDto {
   @IsNumber()
   age: number;
 
-  @IsNumber()
-  birthCity: number;
+  @IsString()
+  birthCity: string;
 
   @IsString()
   birthCountry: string;

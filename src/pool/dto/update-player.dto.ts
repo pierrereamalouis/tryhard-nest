@@ -1,6 +1,8 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { IsString, IsNumber, IsBoolean } from 'class-validator';
+import { CreatePlayerDto } from './create-player.dto';
 
-export class UpdatePlayerDto {
+export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
   @IsString()
   firstName: string;
 
@@ -10,8 +12,8 @@ export class UpdatePlayerDto {
   @IsString()
   position: string;
 
-  @IsNumber()
-  jerseyNumber: number;
+  @IsString()
+  jerseyNumber: string;
 
   @IsString()
   nhlTeam: string;
@@ -28,8 +30,8 @@ export class UpdatePlayerDto {
   @IsNumber()
   age: number;
 
-  @IsNumber()
-  birthCity: number;
+  @IsString()
+  birthCity: string;
 
   @IsString()
   birthCountry: string;

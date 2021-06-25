@@ -29,14 +29,14 @@ export class SeasonController {
 
   @Patch(':id')
   updateSeason(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body() updateSeasonDto: UpdateSeasonDto,
   ): Promise<Season> {
     return this.seasonService.updateSeason(id, updateSeasonDto);
   }
 
   @Delete(':id')
-  deleteSeason(@Param('id') id: string): Promise<void> {
+  deleteSeason(@Param('id', ParseIntPipe) id: string): Promise<void> {
     return this.seasonService.deleteSeason(id);
   }
 }

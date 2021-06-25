@@ -1,6 +1,8 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { IsString, IsNumber } from 'class-validator';
+import { CreateRulesDto } from './create-rules.dto';
 
-export class UpdateRulesDto {
+export class UpdateRulesDto extends PartialType(CreateRulesDto) {
   @IsString()
   name: string;
 

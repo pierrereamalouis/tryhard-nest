@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ParseIntPipe, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 require('dotenv').config();
@@ -8,7 +8,6 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      skipMissingProperties: true,
     }),
   );
   await app.listen(3000);

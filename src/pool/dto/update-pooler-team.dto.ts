@@ -1,6 +1,8 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { IsString, IsNumber } from 'class-validator';
+import { CreatePoolerTeamDto } from './create-pooler-team.dto';
 
-export class UpdatePoolerTeamDto {
+export class UpdatePoolerTeamDto extends PartialType(CreatePoolerTeamDto) {
   @IsString()
   name: string;
 
