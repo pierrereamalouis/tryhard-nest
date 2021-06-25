@@ -18,7 +18,7 @@ export class KeepersController {
   constructor(private keepersService: KeepersService) {}
 
   @Get(':id')
-  get(@Param('id', ParseIntPipe) id: string): Promise<Keepers> {
+  get(@Param('id', ParseIntPipe) id: number): Promise<Keepers> {
     return this.keepersService.getKeepersbyId(id);
   }
 
@@ -29,14 +29,14 @@ export class KeepersController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateKeepersDto: UpdateKeepersDto,
   ): Promise<Keepers> {
     return this.keepersService.updateKeepers(id, updateKeepersDto);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<void> {
+  delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.keepersService.deleteKeepers(id);
   }
 }

@@ -12,7 +12,7 @@ export class LeagueService {
     private leagueRepository: LeagueRepository,
   ) {}
 
-  async getLeagueById(id: string): Promise<League> {
+  async getLeagueById(id: number): Promise<League> {
     const found = await this.leagueRepository.findOne(id);
 
     if (!found) {
@@ -26,7 +26,7 @@ export class LeagueService {
     return this.leagueRepository.createLeague(createLeagueDto);
   }
 
-  async deleteLeague(id: string): Promise<void> {
+  async deleteLeague(id: number): Promise<void> {
     const result = await this.leagueRepository.delete(id);
 
     if (result.affected === 0) {
@@ -35,7 +35,7 @@ export class LeagueService {
   }
 
   async updateLeague(
-    id: string,
+    id: number,
     updateLeagueDto: UpdateLeagueDto,
   ): Promise<League> {
     const league = await this.getLeagueById(id);

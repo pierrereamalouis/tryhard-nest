@@ -19,7 +19,7 @@ export class PoolerService {
   private repos: Repos = {
     leagueRepository: this.leagueRepository,
   };
-  async getPoolerById(id: string): Promise<Pooler> {
+  async getPoolerById(id: number): Promise<Pooler> {
     const found = await this.poolerRepository.findOne(id);
 
     if (!found) {
@@ -33,7 +33,7 @@ export class PoolerService {
     return this.poolerRepository.createPooler(createPoolerDto, this.repos);
   }
 
-  async updatePooler(id: string, updatePoolerDto: UpdatePoolerDto) {
+  async updatePooler(id: number, updatePoolerDto: UpdatePoolerDto) {
     const pooler = await this.getPoolerById(id);
 
     const updatedPooler = mapDtoToEntity<Pooler, UpdatePoolerDto>(
@@ -45,7 +45,7 @@ export class PoolerService {
     return updatedPooler;
   }
 
-  async deletePooler(id: string): Promise<void> {
+  async deletePooler(id: number): Promise<void> {
     const result = await this.poolerRepository.delete(id);
 
     if (result.affected === 0) {

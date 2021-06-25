@@ -86,7 +86,12 @@ export class PoolerTeamService {
     const poolerTeam = await this.getPoolerTeamById(id);
 
     const players: Player[] = createPlayerDtos.map((playerDto) => {
-      return mapDtoToEntity<Player, CreatePlayerDto>(new Player(), playerDto);
+      const player = mapDtoToEntity<Player, CreatePlayerDto>(
+        new Player(),
+        playerDto,
+      );
+      player.save();
+      return player;
     });
 
     players.forEach((player) => {

@@ -23,7 +23,7 @@ export class KeepersService {
     seasonRepository: this.seasonRepository,
   };
 
-  async getKeepersbyId(id: string): Promise<Keepers> {
+  async getKeepersbyId(id: number): Promise<Keepers> {
     const found = await this.keepersRepository.findOne(id);
 
     if (!found) {
@@ -38,7 +38,7 @@ export class KeepersService {
   }
 
   async updateKeepers(
-    id: string,
+    id: number,
     updateKeepersDto: UpdateKeepersDto,
   ): Promise<Keepers> {
     const keepers = await this.getKeepersbyId(id);
@@ -63,7 +63,7 @@ export class KeepersService {
     return updatedKeepers;
   }
 
-  async deleteKeepers(id: string): Promise<void> {
+  async deleteKeepers(id: number): Promise<void> {
     const result = await this.keepersRepository.delete(id);
 
     if (result.affected === 0) {

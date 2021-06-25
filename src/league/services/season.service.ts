@@ -22,7 +22,7 @@ export class SeasonService {
     rulesRepository: this.rulesRepository,
   };
 
-  async getSeasonById(id: string): Promise<Season> {
+  async getSeasonById(id: number): Promise<Season> {
     const found = await this.seasonRepository.findOne(id);
 
     if (!found) {
@@ -36,7 +36,7 @@ export class SeasonService {
     return this.seasonRepository.createSeason(createSeasonDto, this.repos);
   }
 
-  async deleteSeason(id: string): Promise<void> {
+  async deleteSeason(id: number): Promise<void> {
     const result = await this.seasonRepository.delete(id);
 
     if (result.affected === 0) {
@@ -45,7 +45,7 @@ export class SeasonService {
   }
 
   async updateSeason(
-    id: string,
+    id: number,
     updateSeasonDto: UpdateSeasonDto,
   ): Promise<Season> {
     const season = await this.getSeasonById(id);

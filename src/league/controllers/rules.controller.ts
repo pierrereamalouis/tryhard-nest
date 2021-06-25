@@ -18,7 +18,7 @@ export class RulesController {
   constructor(private rulesService: RulesService) {}
 
   @Get(':id')
-  getRulesById(@Param('id', ParseIntPipe) id: string): Promise<Rules> {
+  getRulesById(@Param('id', ParseIntPipe) id: number): Promise<Rules> {
     return this.rulesService.getRulesById(id);
   }
 
@@ -29,14 +29,14 @@ export class RulesController {
 
   @Patch(':id')
   updateRules(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateRulesDto: UpdateRulesDto,
   ): Promise<Rules> {
     return this.rulesService.updateRules(id, updateRulesDto);
   }
 
   @Delete(':id')
-  deleteRules(@Param('id') id: string): Promise<void> {
+  deleteRules(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.rulesService.deleteRules(id);
   }
 }

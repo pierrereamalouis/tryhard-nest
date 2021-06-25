@@ -18,7 +18,7 @@ export class PoolerController {
   constructor(private poolerService: PoolerService) {}
 
   @Get(':id')
-  getPoolerById(@Param('id', ParseIntPipe) id: string): Promise<Pooler> {
+  getPoolerById(@Param('id', ParseIntPipe) id: number): Promise<Pooler> {
     return this.poolerService.getPoolerById(id);
   }
 
@@ -29,14 +29,14 @@ export class PoolerController {
 
   @Patch(':id')
   updatePooler(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updatePoolerDto: UpdatePoolerDto,
   ): Promise<Pooler> {
     return this.poolerService.updatePooler(id, updatePoolerDto);
   }
 
   @Delete(':id')
-  deletePooler(@Param('id') id: string): Promise<void> {
+  deletePooler(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.poolerService.deletePooler(id);
   }
 }

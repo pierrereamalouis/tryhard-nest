@@ -13,7 +13,7 @@ export class RulesService {
     private rulesRepository: RulesRepository,
   ) {}
 
-  async getRulesById(id: string): Promise<Rules> {
+  async getRulesById(id: number): Promise<Rules> {
     const found = await this.rulesRepository.findOne(id);
 
     if (!found) {
@@ -28,7 +28,7 @@ export class RulesService {
   }
 
   async updateRules(
-    id: string,
+    id: number,
     updateRulesDto: UpdateRulesDto,
   ): Promise<Rules> {
     const rules = await this.getRulesById(id);
@@ -42,7 +42,7 @@ export class RulesService {
     return updatedRules;
   }
 
-  async deleteRules(id: string): Promise<void> {
+  async deleteRules(id: number): Promise<void> {
     const result = await this.rulesRepository.delete(id);
 
     if (result.affected === 0) {

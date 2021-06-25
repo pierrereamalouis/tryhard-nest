@@ -18,7 +18,7 @@ export class LeagueController {
   constructor(private leagueService: LeagueService) {}
 
   @Get('/:id')
-  getLeagueById(@Param('id', ParseIntPipe) id: string): Promise<League> {
+  getLeagueById(@Param('id', ParseIntPipe) id: number): Promise<League> {
     return this.leagueService.getLeagueById(id);
   }
 
@@ -28,13 +28,13 @@ export class LeagueController {
   }
 
   @Delete('/:id')
-  deleteLeague(@Param('id') id: string): Promise<void> {
+  deleteLeague(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.leagueService.deleteLeague(id);
   }
 
   @Patch('/:id')
   updateLeague(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateLeagueDto: UpdateLeagueDto,
   ): Promise<League> {
     return this.leagueService.updateLeague(id, updateLeagueDto);

@@ -18,7 +18,7 @@ export class SeasonController {
   constructor(private seasonService: SeasonService) {}
 
   @Get(':id')
-  getSeasonById(@Param('id', ParseIntPipe) id: string): Promise<Season> {
+  getSeasonById(@Param('id', ParseIntPipe) id: number): Promise<Season> {
     return this.seasonService.getSeasonById(id);
   }
 
@@ -29,14 +29,14 @@ export class SeasonController {
 
   @Patch(':id')
   updateSeason(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateSeasonDto: UpdateSeasonDto,
   ): Promise<Season> {
     return this.seasonService.updateSeason(id, updateSeasonDto);
   }
 
   @Delete(':id')
-  deleteSeason(@Param('id', ParseIntPipe) id: string): Promise<void> {
+  deleteSeason(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.seasonService.deleteSeason(id);
   }
 }
