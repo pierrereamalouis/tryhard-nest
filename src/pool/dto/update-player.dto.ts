@@ -3,6 +3,9 @@ import { IsString, IsNumber, IsBoolean } from 'class-validator';
 import { CreatePlayerDto } from './create-player.dto';
 
 export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
+  @IsNumber()
+  mySportsFeedsId: number;
+
   @IsString()
   firstName: string;
 
@@ -10,10 +13,10 @@ export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
   lastName: string;
 
   @IsString()
-  position: string;
+  primaryPosition: string;
 
   @IsString()
-  jerseyNumber: string;
+  jerseyNumber: number;
 
   @IsString()
   nhlTeam: string;
@@ -21,8 +24,8 @@ export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
   @IsString()
   height: string;
 
-  @IsString()
-  weight: string;
+  @IsNumber()
+  weight: number;
 
   @IsString()
   birthDate: string;

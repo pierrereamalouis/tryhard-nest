@@ -2,6 +2,10 @@ import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreatePlayerDto {
   @IsNotEmpty()
+  @IsNumber()
+  mySportsFeedsId: number;
+
+  @IsNotEmpty()
   @IsString()
   firstName: string;
 
@@ -11,11 +15,11 @@ export class CreatePlayerDto {
 
   @IsNotEmpty()
   @IsString()
-  position: string;
+  primaryPosition: string;
 
   @IsNotEmpty()
-  @IsString()
-  jerseyNumber: string;
+  @IsNumber()
+  jerseyNumber: number;
 
   @IsNotEmpty()
   @IsString()
@@ -26,8 +30,8 @@ export class CreatePlayerDto {
   height: string;
 
   @IsNotEmpty()
-  @IsString()
-  weight: string;
+  @IsNumber()
+  weight: number;
 
   @IsString()
   birthDate: string;

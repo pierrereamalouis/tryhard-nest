@@ -16,6 +16,12 @@ export class Player extends BaseEntity {
   id: number;
 
   @Column({
+    type: 'integer',
+    name: 'mySportsFeedsId',
+  })
+  mySportsFeeds: number;
+
+  @Column({
     type: 'varchar',
     length: 50,
     name: 'first_name',
@@ -32,7 +38,7 @@ export class Player extends BaseEntity {
   @Column({
     type: 'varchar',
     length: 50,
-    name: 'position',
+    name: 'primaryPosition',
   })
   position: string;
 
@@ -51,11 +57,10 @@ export class Player extends BaseEntity {
   height: string;
 
   @Column({
-    type: 'varchar',
-    length: 50,
+    type: 'integer',
     name: 'weight',
   })
-  weight: string;
+  weight: number;
 
   @Column({
     type: 'varchar',
