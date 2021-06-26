@@ -18,6 +18,7 @@ export class Player extends BaseEntity {
   @Column({
     type: 'integer',
     name: 'mySportsFeedsId',
+    unique: true,
   })
   mySportsFeeds: number;
 
