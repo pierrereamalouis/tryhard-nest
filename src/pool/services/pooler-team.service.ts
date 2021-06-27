@@ -8,6 +8,7 @@ import { CreatePoolerTeamDto } from '../dto/create-pooler-team.dto';
 import { UpdatePoolerTeamDto } from '../dto/update-pooler-team.dto';
 import { Player } from '../entities/player.entity';
 import { PoolerTeam } from '../entities/pooler-team.entity';
+import { PlayerRepository } from '../repositories/player.repository';
 import { PoolerTeamRepository } from '../repositories/pooler-team.repository';
 import { PoolerRepository } from '../repositories/pooler.repository';
 
@@ -18,6 +19,7 @@ export class PoolerTeamService {
     private poolerTeamRepository: PoolerTeamRepository,
     private poolerRepository: PoolerRepository,
     private seasonRepository: SeasonRepository,
+    private playerRepository: PlayerRepository,
   ) {}
 
   private repos: Repos = {
@@ -85,21 +87,29 @@ export class PoolerTeamService {
   ): Promise<PoolerTeam> {
     const poolerTeam = await this.getPoolerTeamById(id);
 
-    const players: Player[] = createPlayerDtos.map((playerDto) => {
-      const player = mapDtoToEntity<Player, CreatePlayerDto>(
-        new Player(),
-        playerDto,
-      );
-      player.save();
-      return player;
-    });
+    const players: Player[] = await Promise.all(
+      createPlayerDtos.map(this.createPlayersArray),
+    );
 
-    players.forEach((player) => {
-      poolerTeam.players.push(player);
-    });
+    poolerTeam.players = players;
 
     await this.poolerTeamRepository.save(poolerTeam);
 
     return poolerTeam;
+  }
+
+  async createPlayersArray(playerDto: CreatePlayerDto): Promise<Player> {
+    // const existingPlayer = await this.playerRepository.findOne(4479);
+
+    // if (!existingPlayer) {
+    const player = mapDtoToEntity<Player, CreatePlayerDto>(
+      new Player(),
+      playerDto,
+    );
+    await player.save();
+    return player;
+    // }
+
+    // return existingPlayer;
   }
 }

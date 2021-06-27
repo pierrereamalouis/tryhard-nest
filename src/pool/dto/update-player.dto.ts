@@ -16,9 +16,6 @@ export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
   primaryPosition: string;
 
   @IsString()
-  jerseyNumber: number;
-
-  @IsString()
   nhlTeam: string;
 
   @IsString()

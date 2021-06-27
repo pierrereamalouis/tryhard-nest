@@ -18,10 +18,6 @@ export class CreatePlayerDto {
   primaryPosition: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  jerseyNumber: number;
-
-  @IsNotEmpty()
   @IsString()
   nhlTeam: string;
 
