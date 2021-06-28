@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { KeepersRepository } from './repositories/keepers.repository';
 import { PlayerRepository } from './repositories/player.repository';
@@ -25,6 +25,13 @@ import { SeasonRepository } from 'src/league/repositories/season.repository';
       LeagueRepository,
       SeasonRepository,
     ]),
+    HttpModule.register({
+      baseURL: 'https://api.mysportsfeeds.com/v2.1/pull/nhl/',
+      auth: {
+        username: process.env.MYSPORTSFEEDSUSERNAME,
+        password: process.env.MYSPORTSFEEDSPASSWORD,
+      },
+    }),
   ],
   controllers: [
     PoolerController,

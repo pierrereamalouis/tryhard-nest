@@ -88,7 +88,7 @@ export class PoolerTeamService {
     const poolerTeam = await this.getPoolerTeamById(id);
 
     const players: Player[] = await Promise.all(
-      createPlayerDtos.map(this.createPlayersArray),
+      createPlayerDtos.map(this.createPlayersArray, this),
     );
 
     poolerTeam.players = players;
@@ -99,17 +99,19 @@ export class PoolerTeamService {
   }
 
   async createPlayersArray(playerDto: CreatePlayerDto): Promise<Player> {
-    // const existingPlayer = await this.playerRepository.findOne(4479);
+    const existingPlayer = await this.playerRepository.findOne({
+      mySportsFeedsId: playerDto.mySportsFeedsId,
+    });
 
-    // if (!existingPlayer) {
-    const player = mapDtoToEntity<Player, CreatePlayerDto>(
-      new Player(),
-      playerDto,
-    );
-    await player.save();
-    return player;
-    // }
+    if (!existingPlayer) {
+      const player = mapDtoToEntity<Player, CreatePlayerDto>(
+        new Player(),
+        playerDto,
+      );
+      await player.save();
+      return player;
+    }
 
-    // return existingPlayer;
+    return existingPlayer;
   }
 }

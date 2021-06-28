@@ -4,6 +4,7 @@ import { getConnectionOptions } from 'typeorm';
 import { LeagueModule } from './league/league.module';
 import { PoolModule } from './pool/pool.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
           autoLoadEntities: true,
         }),
     }),
+    ConfigModule.forRoot({ isGlobal: true }),
     LeagueModule,
     PoolModule,
     AuthModule,
