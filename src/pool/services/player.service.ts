@@ -70,20 +70,25 @@ export class PlayerService {
 
   async getPlayersFromMySportsFeeds(): Promise<any> {
     const response = await this.httpService
-      .get('players.json?rosterstatus=assigned-to-roster&limit=20')
+      .get('players.json?rosterstatus=assigned-to-roster&limit=10')
       .toPromise();
 
-    return this.setNhlTeam(response.data);
+    return await this.setNhlTeam(response.data);
   }
 
-  setNhlTeam(data) {
-    const json = JSON.parse(data);
+  async setNhlTeam(data) {
+    data.players = data.players.filter(
+      (players) => players.player.currentTeam !== null,
+    );
 
-    json.players['nhlTeam'] = json.players['currentTeam'];
-    delete json.players['currentTeam'];
+    data.players.forEach((players) => {
+      players.player['nhlTeam'] = players.player['currentTeam'];
 
-    json.players.nhlTeam = json.players.nhlTeam.abbreviation;
+      players.player.nhlTeam = players.player.nhlTeam.abbreviation;
 
-    return JSON.stringify(json);
+      delete players.player['currentTeam'];
+    });
+
+    return data;
   }
 }

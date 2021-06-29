@@ -28,8 +28,8 @@ import { SeasonRepository } from 'src/league/repositories/season.repository';
     HttpModule.register({
       baseURL: 'https://api.mysportsfeeds.com/v2.1/pull/nhl/',
       auth: {
-        username: process.env.MYSPORTSFEEDSUSERNAME,
-        password: process.env.MYSPORTSFEEDSPASSWORD,
+        username: '0a17aeb8-8db7-484a-a42a-dfbf6e',
+        password: 'MYSPORTSFEEDS',
       },
     }),
   ],
