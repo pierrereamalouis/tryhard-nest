@@ -14,6 +14,7 @@ import { KeepersService } from './services/keepers.service';
 import { PlayerService } from './services/player.service';
 import { LeagueRepository } from 'src/league/repositories/league.repository';
 import { SeasonRepository } from 'src/league/repositories/season.repository';
+import { HttpConfigService } from 'src/config/HttpConfigService';
 
 @Module({
   imports: [
@@ -25,12 +26,8 @@ import { SeasonRepository } from 'src/league/repositories/season.repository';
       LeagueRepository,
       SeasonRepository,
     ]),
-    HttpModule.register({
-      baseURL: 'https://api.mysportsfeeds.com/v2.1/pull/nhl/',
-      auth: {
-        username: '0a17aeb8-8db7-484a-a42a-dfbf6e',
-        password: 'MYSPORTSFEEDS',
-      },
+    HttpModule.registerAsync({
+      useClass: HttpConfigService,
     }),
   ],
   controllers: [

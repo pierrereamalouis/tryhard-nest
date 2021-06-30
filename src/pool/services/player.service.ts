@@ -17,7 +17,11 @@ export class PlayerService {
     private playerRepository: PlayerRepository,
     private seasonRepository: SeasonRepository,
     private httpService: HttpService,
-  ) {}
+  ) {
+    this.httpService.axiosRef.interceptors.response.use((res) => {
+      return this.setNhlTeam(res);
+    });
+  }
 
   private repos: Repos = {
     seasonRepository: this.seasonRepository,
@@ -73,15 +77,15 @@ export class PlayerService {
       .get('players.json?rosterstatus=assigned-to-roster&limit=10')
       .toPromise();
 
-    return await this.setNhlTeam(response.data);
+    return response.data;
   }
 
-  async setNhlTeam(data) {
-    data.players = data.players.filter(
+  setNhlTeam(res) {
+    res.data.players = res.data.players.filter(
       (players) => players.player.currentTeam !== null,
     );
 
-    data.players.forEach((players) => {
+    res.data.players.forEach((players) => {
       players.player['nhlTeam'] = players.player['currentTeam'];
 
       players.player.nhlTeam = players.player.nhlTeam.abbreviation;
@@ -89,6 +93,6 @@ export class PlayerService {
       delete players.player['currentTeam'];
     });
 
-    return data;
+    return res;
   }
 }
