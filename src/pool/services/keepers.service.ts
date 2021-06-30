@@ -4,9 +4,12 @@ import { Repos } from 'src/interfaces/repos.interface';
 import { SeasonRepository } from 'src/league/repositories/season.repository';
 import mapDtoToEntity from 'src/utils/entity.utils';
 import { CreateKeepersDto } from '../dto/create-keepers.dto';
+import { CreatePlayerDto } from '../dto/create-player.dto';
 import { UpdateKeepersDto } from '../dto/update-keepers.dto';
 import { Keepers } from '../entities/keepers.entity';
+import { Player } from '../entities/player.entity';
 import { KeepersRepository } from '../repositories/keepers.repository';
+import { PlayerRepository } from '../repositories/player.repository';
 import { PoolerRepository } from '../repositories/pooler.repository';
 
 @Injectable()
@@ -16,6 +19,7 @@ export class KeepersService {
     private keepersRepository: KeepersRepository,
     private poolerRepository: PoolerRepository,
     private seasonRepository: SeasonRepository,
+    private playerRepository: PlayerRepository,
   ) {}
 
   private repos: Repos = {
@@ -24,7 +28,9 @@ export class KeepersService {
   };
 
   async getKeepersbyId(id: number): Promise<Keepers> {
-    const found = await this.keepersRepository.findOne(id);
+    const found = await this.keepersRepository.findOne(id, {
+      relations: ['players'],
+    });
 
     if (!found) {
       throw new NotFoundException(`Keepers with ID ${id} not found`);
@@ -69,5 +75,35 @@ export class KeepersService {
     if (result.affected === 0) {
       throw new NotFoundException(`Keepers List with Id ${id} not found`);
     }
+  }
+
+  async addPlayers(
+    id: number,
+    createPlayerDtos: CreatePlayerDto[],
+  ): Promise<Keepers> {
+    const keepers = await this.getKeepersbyId(id);
+
+    keepers.players = await this.playerRepository.getPlayersArray(
+      createPlayerDtos,
+    );
+
+    await this.keepersRepository.save(keepers);
+
+    return keepers;
+  }
+
+  async addOnePlayer(
+    id: number,
+    createPlayerDto: CreatePlayerDto,
+  ): Promise<Keepers> {
+    const keepers = await this.getKeepersbyId(id);
+
+    const player = await this.playerRepository.createNewPlayer(createPlayerDto);
+
+    keepers.players.push(player);
+
+    await this.keepersRepository.save(keepers);
+
+    return keepers;
   }
 }

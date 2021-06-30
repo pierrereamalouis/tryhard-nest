@@ -87,31 +87,27 @@ export class PoolerTeamService {
   ): Promise<PoolerTeam> {
     const poolerTeam = await this.getPoolerTeamById(id);
 
-    const players: Player[] = await Promise.all(
-      createPlayerDtos.map(this.createPlayersArray, this),
+    poolerTeam.players = await this.playerRepository.getPlayersArray(
+      createPlayerDtos,
     );
-
-    poolerTeam.players = players;
 
     await this.poolerTeamRepository.save(poolerTeam);
 
     return poolerTeam;
   }
 
-  async createPlayersArray(playerDto: CreatePlayerDto): Promise<Player> {
-    const existingPlayer = await this.playerRepository.findOne({
-      mySportsFeedsId: playerDto.mySportsFeedsId,
-    });
+  async addOnePlayer(
+    id: number,
+    createPlayerDto: CreatePlayerDto,
+  ): Promise<PoolerTeam> {
+    const poolerTeam = await this.getPoolerTeamById(id);
 
-    if (!existingPlayer) {
-      const player = mapDtoToEntity<Player, CreatePlayerDto>(
-        new Player(),
-        playerDto,
-      );
-      await player.save();
-      return player;
-    }
+    const player = await this.playerRepository.createNewPlayer(createPlayerDto);
 
-    return existingPlayer;
+    poolerTeam.players.push(player);
+
+    await this.poolerRepository.save(poolerTeam);
+
+    return poolerTeam;
   }
 }

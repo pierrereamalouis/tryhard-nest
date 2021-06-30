@@ -38,28 +38,21 @@ export class PlayerService {
   }
 
   async createPlayer(createPlayerDto: CreatePlayerDto): Promise<Player> {
-    const player = mapDtoToEntity<Player, CreatePlayerDto>(
-      new Player(),
-      createPlayerDto,
-    );
-
-    await player.save();
+    const player = await this.playerRepository.createNewPlayer(createPlayerDto);
 
     return player;
   }
 
   async updatePlayer(
     id: number,
-    udpatePlayerDto: UpdatePlayerDto,
+    updatePlayerDto: UpdatePlayerDto,
   ): Promise<Player> {
     const player = await this.getPlayerById(id);
 
-    const updatedPlayer = mapDtoToEntity<Player, UpdatePlayerDto>(
+    const updatedPlayer = this.playerRepository.updatePlayer(
       player,
-      udpatePlayerDto,
+      updatePlayerDto,
     );
-
-    await this.playerRepository.save(player);
 
     return updatedPlayer;
   }
