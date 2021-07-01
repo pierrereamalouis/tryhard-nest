@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -50,17 +51,29 @@ export class PoolerTeam extends BaseEntity {
   @ManyToOne(() => Season, (season) => season.poolerTeams, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'season_id' })
   season: Season;
 
   @ManyToOne(() => Pooler, (pooler) => pooler.poolerTeams, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'pooler_id' })
   pooler: Pooler;
 
   @ManyToMany(() => Player, (player) => player.poolerTeams, {
     cascade: true,
   })
-  @JoinTable()
+  @JoinTable({
+    name: 'pooler_team_players',
+    joinColumn: {
+      name: 'pooler_team_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'player_id',
+      referencedColumnName: 'id',
+    },
+  })
   players: Player[];
 
   @CreateDateColumn({

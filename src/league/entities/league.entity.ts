@@ -26,7 +26,17 @@ export class League extends BaseEntity {
   @ManyToMany(() => Pooler, (pooler) => pooler.leagues, {
     cascade: true,
   })
-  @JoinTable()
+  @JoinTable({
+    name: 'league_poolers',
+    joinColumn: {
+      name: 'league_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'pooler_id',
+      referencedColumnName: 'id',
+    },
+  })
   poolers: Pooler[];
 
   @OneToMany(() => Season, (season) => season.league, {

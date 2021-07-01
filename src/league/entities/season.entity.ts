@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -53,12 +54,14 @@ export class Season extends BaseEntity {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'rules_id' })
   rules: Rules;
 
   @ManyToOne(() => League, (league) => league.seasons, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: 'league_id' })
   league: League;
 
   @CreateDateColumn({
