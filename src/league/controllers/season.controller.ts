@@ -22,6 +22,11 @@ export class SeasonController {
     return this.seasonService.getSeasonById(id);
   }
 
+  @Get(':id/players/fa')
+  getPlayersFA(@Param('id', ParseIntPipe) id: number): Promise<never[]> {
+    return this.seasonService.getPlayersFA(id);
+  }
+
   @Post()
   createSeason(@Body() createSeasonDto: CreateSeasonDto): Promise<Season> {
     return this.seasonService.createSeason(createSeasonDto);

@@ -10,6 +10,7 @@ import { PoolModule } from 'src/pool/pool.module';
 import { RulesRepository } from './repositories/rules.repository';
 import { RulesService } from './services/rules.service';
 import { RulesController } from './controllers/rules.controller';
+import { PlayerRepository } from 'src/pool/repositories/player.repository';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RulesController } from './controllers/rules.controller';
       LeagueRepository,
       SeasonRepository,
       RulesRepository,
+      PlayerRepository,
     ]),
   ],
   controllers: [LeagueController, SeasonController, RulesController],

@@ -7,6 +7,7 @@ import { Season } from '../entities/season.entity';
 import { LeagueRepository } from '../repositories/league.repository';
 import { RulesRepository } from '../repositories/rules.repository';
 import mapDtoToEntity from '../../utils/entity.utils';
+import { PlayerRepository } from 'src/pool/repositories/player.repository';
 
 @Injectable()
 export class SeasonService {
@@ -15,11 +16,13 @@ export class SeasonService {
     private seasonRepository: SeasonRepository,
     private leagueRepository: LeagueRepository,
     private rulesRepository: RulesRepository,
+    private playerRepository: PlayerRepository,
   ) {}
 
   private repos = {
     leagueRepository: this.leagueRepository,
     rulesRepository: this.rulesRepository,
+    playerRepository: this.playerRepository,
   };
 
   async getSeasonById(id: number): Promise<Season> {
@@ -67,5 +70,9 @@ export class SeasonService {
     await this.seasonRepository.save(updatedSeason);
 
     return updatedSeason;
+  }
+
+  async getPlayersFA(seasonId: number): Promise<never[]> {
+    return this.playerRepository.getSeasonPlayersFA(seasonId);
   }
 }
