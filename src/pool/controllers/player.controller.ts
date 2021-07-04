@@ -22,6 +22,13 @@ export class PlayerController {
     return this.playerService.getPlayersFromMySportsFeeds();
   }
 
+  @Get('free-agents')
+  getFreeAgents(
+    @Body('seasonId', ParseIntPipe) seasonId: number,
+  ): Promise<any> {
+    return this.playerService.getSeasonFAPlayers(seasonId);
+  }
+
   @Get('/:id')
   get(@Param('id', ParseIntPipe) id: number): Promise<Player> {
     return this.playerService.getPlayerById(id);

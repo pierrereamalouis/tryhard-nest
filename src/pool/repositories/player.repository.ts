@@ -1,6 +1,6 @@
 import { Season } from 'src/league/entities/season.entity';
 import mapDtoToEntity from 'src/utils/entity.utils';
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, getConnection, Repository } from 'typeorm';
 import { CreatePlayerDto } from '../dto/create-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { Player } from '../entities/player.entity';
@@ -57,8 +57,36 @@ export class PlayerRepository extends Repository<Player> {
     );
   }
 
-  async getSeasonPlayersFA(id: number): Promise<never[]> {
-    const playersFA: never[] = await this.createQueryBuilder()
+  async getSeasonPlayersFA(seasonId: number, responseData: any): Promise<any> {
+    const playersIDs = await this.getPlayersFromSeason(seasonId);
+
+    // data is result of axios call to mySportsFeeds api
+    // filter players array so that we only returned players that has not been
+    // taken
+    // turn playersIDs into keys from an object
+    // filter the array by checking if my_sports_feeds_id corresponds to one of the keys in obj
+    // if yes remove player from the response.data.players array
+
+    responseData.players = await this.filterPlayersArr(
+      playersIDs,
+      responseData.players,
+    );
+
+    return responseData;
+  }
+
+  async filterPlayersArr(playersIds: any[], players: any[]): Promise<any[]> {
+    const obj = {};
+
+    playersIds.forEach((value) => (obj[value] = 'player'));
+
+    return players.filter((players) => !obj.hasOwnProperty(players.player.id));
+  }
+
+  async getPlayersFromSeason(id: number): Promise<never[]> {
+    // Query to only get mySportsFeeds ids
+    const players: never[] = await getConnection()
+      .createQueryBuilder()
       .select('player.my_sports_feeds_id')
       .from(Season, 'season')
       .innerJoin(
@@ -76,10 +104,9 @@ export class PlayerRepository extends Repository<Player> {
         'player',
         'pooler_team_players.player_id = player.id ',
       )
-      .where('season.id = :id', { id: id })
-      .printSql()
+      .where('season.id = :id', { id })
       .getRawMany();
 
-    return playersFA;
+    return players.map((value) => value['my_sports_feeds_id']);
   }
 }

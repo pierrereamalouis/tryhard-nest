@@ -70,7 +70,7 @@ export class PlayerService {
       .get('players.json?rosterstatus=assigned-to-roster&limit=10')
       .toPromise();
 
-    return response.data;
+    return response;
   }
 
   setNhlTeam(res) {
@@ -87,5 +87,11 @@ export class PlayerService {
     });
 
     return res;
+  }
+
+  async getSeasonFAPlayers(id: number): Promise<any> {
+    const response = await this.getPlayersFromMySportsFeeds();
+
+    return await this.playerRepository.getSeasonPlayersFA(id, response.data);
   }
 }

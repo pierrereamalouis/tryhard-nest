@@ -71,8 +71,4 @@ export class SeasonService {
 
     return updatedSeason;
   }
-
-  async getPlayersFA(seasonId: number): Promise<never[]> {
-    return this.playerRepository.getSeasonPlayersFA(seasonId);
-  }
 }
