@@ -68,5 +68,7 @@ export class InvitationService {
     invitation.league = await this.leagueRepository.findOne(leagueId);
 
     await invitation.save();
+
+    // Email implementation to be added
   }
 }
