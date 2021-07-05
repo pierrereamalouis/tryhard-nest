@@ -11,6 +11,8 @@ import { RulesRepository } from './repositories/rules.repository';
 import { RulesService } from './services/rules.service';
 import { RulesController } from './controllers/rules.controller';
 import { PlayerRepository } from 'src/pool/repositories/player.repository';
+import { InvitationController } from './controllers/invitation.controller';
+import { InvitationService } from './services/invitation.service';
 
 @Module({
   imports: [
@@ -22,7 +24,12 @@ import { PlayerRepository } from 'src/pool/repositories/player.repository';
       PlayerRepository,
     ]),
   ],
-  controllers: [LeagueController, SeasonController, RulesController],
-  providers: [LeagueService, SeasonService, RulesService],
+  controllers: [
+    LeagueController,
+    SeasonController,
+    RulesController,
+    InvitationController,
+  ],
+  providers: [LeagueService, SeasonService, RulesService, InvitationService],
 })
 export class LeagueModule {}

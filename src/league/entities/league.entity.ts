@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Season } from './season.entity';
 import { Pooler } from 'src/pool/entities/pooler.entity';
+import { Invitation } from './invitation.entity';
 
 @Entity()
 export class League extends BaseEntity {
@@ -43,6 +44,11 @@ export class League extends BaseEntity {
     cascade: true,
   })
   seasons: Season[];
+
+  @OneToMany(() => Invitation, (invitation) => invitation.league, {
+    cascade: true,
+  })
+  invitations: Invitation[];
 
   @CreateDateColumn({
     name: 'created_at',
