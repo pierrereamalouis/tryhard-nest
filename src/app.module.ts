@@ -5,6 +5,7 @@ import { LeagueModule } from './league/league.module';
 import { PoolModule } from './pool/pool.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
     LeagueModule,
     PoolModule,
     AuthModule,
+    MailModule,
   ],
 })
 export class AppModule {}
