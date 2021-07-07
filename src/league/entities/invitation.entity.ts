@@ -1,3 +1,4 @@
+import { Pooler } from 'src/pool/entities/pooler.entity';
 import {
   BaseEntity,
   Column,
@@ -10,14 +11,13 @@ import { League } from './league.entity';
 
 @Entity()
 export class Invitation extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column({
-    type: 'varchar',
+    type: 'uuid',
     name: 'invitation_token',
   })
-  @Generated('uuid')
   invitationToken: string;
 
   @Column({
@@ -33,6 +33,13 @@ export class Invitation extends BaseEntity {
   })
   isUsed: boolean;
 
-  @ManyToOne(() => League, (league) => league.invitations)
+  @ManyToOne(() => League, (league) => league.invitations, {
+    onDelete: 'CASCADE',
+  })
   league: League;
+
+  @ManyToOne(() => Pooler, (pooler) => pooler.invitations, {
+    onDelete: 'CASCADE',
+  })
+  pooler: Pooler;
 }

@@ -1,11 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PoolerRepository } from 'src/pool/repositories/pooler.repository';
-import mapDtoToEntity from 'src/utils/entity.utils';
 import { CreateInvitationDto } from '../dto/create-invitation.dto';
 import { Invitation } from '../entities/invitation.entity';
 import { InvitationRepository } from '../repositories/invitation.repository';
 import { LeagueRepository } from '../repositories/league.repository';
+import { v4 as uuidv4 } from 'uuid';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class InvitationService {
@@ -14,6 +15,7 @@ export class InvitationService {
     private invitationRepository: InvitationRepository,
     private leagueRepository: LeagueRepository,
     private poolerRepository: PoolerRepository,
+    private mailService: MailService,
   ) {}
 
   async findInvitation(invitationToken: string): Promise<Invitation> {
@@ -58,17 +60,21 @@ export class InvitationService {
   async createInvitation(
     createInvitationDto: CreateInvitationDto,
   ): Promise<void> {
-    const invitation = mapDtoToEntity<Invitation, CreateInvitationDto>(
-      new Invitation(),
-      createInvitationDto,
-    );
+    const invitation = new Invitation();
 
-    const { leagueId } = createInvitationDto;
+    const { leagueId, poolerId } = createInvitationDto;
+
+    invitation.invitationToken = uuidv4();
 
     invitation.league = await this.leagueRepository.findOne(leagueId);
+    invitation.pooler = await this.poolerRepository.findOne(poolerId);
 
+    invitation.email = invitation.pooler.email;
     await invitation.save();
 
-    // Email implementation to be added
+    await this.mailService.sendPoolerInvitation(
+      invitation.pooler,
+      invitation.invitationToken,
+    );
   }
 }

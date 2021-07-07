@@ -12,6 +12,7 @@ import {
 import { League } from 'src/league/entities/league.entity';
 import { PoolerTeam } from './pooler-team.entity';
 import { Keepers } from './keepers.entity';
+import { Invitation } from 'src/league/entities/invitation.entity';
 @Entity()
 export class Pooler extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -39,6 +40,11 @@ export class Pooler extends BaseEntity {
     cascade: true,
   })
   poolerTeams: PoolerTeam[];
+
+  @OneToMany(() => Invitation, (invitation) => invitation.pooler, {
+    cascade: true,
+  })
+  invitations: Invitation[];
 
   @ManyToMany(() => League, (league) => league.poolers)
   leagues: League[];

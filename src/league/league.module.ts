@@ -13,16 +13,22 @@ import { RulesController } from './controllers/rules.controller';
 import { PlayerRepository } from 'src/pool/repositories/player.repository';
 import { InvitationController } from './controllers/invitation.controller';
 import { InvitationService } from './services/invitation.service';
+import { InvitationRepository } from './repositories/invitation.repository';
+import { PoolerRepository } from 'src/pool/repositories/pooler.repository';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
   imports: [
-    PoolModule,
     TypeOrmModule.forFeature([
       LeagueRepository,
       SeasonRepository,
       RulesRepository,
       PlayerRepository,
+      InvitationRepository,
+      PoolerRepository,
     ]),
+    PoolModule,
+    MailModule,
   ],
   controllers: [
     LeagueController,
