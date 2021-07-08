@@ -10,19 +10,21 @@ import {
 import { CreateInvitationDto } from '../dto/create-invitation.dto';
 import { InvitationService } from '../services/invitation.service';
 
-@Controller('invitations')
+@Controller('invitation')
 export class InvitationController {
   constructor(private invitationService: InvitationService) {}
 
   @Get(':invitation-token')
   joinLeague(
     @Param('invitation-token', ParseUUIDPipe) invitationToken: string,
-  ): void {
-    this.invitationService.joinTheLeague(invitationToken);
+  ): Promise<void> {
+    return this.invitationService.joinTheLeague(invitationToken);
   }
 
   @Post()
-  invitePoolerToLeague(@Body() createInvitationDto: CreateInvitationDto): void {
-    this.invitationService.createInvitation(createInvitationDto);
+  invitePoolerToLeague(
+    @Body() createInvitationDto: CreateInvitationDto,
+  ): Promise<void> {
+    return this.invitationService.createInvitation(createInvitationDto);
   }
 }

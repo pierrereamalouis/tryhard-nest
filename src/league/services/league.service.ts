@@ -13,13 +13,11 @@ export class LeagueService {
   ) {}
 
   async getLeagueById(id: number): Promise<League> {
-    const found = await this.leagueRepository.findOne(id);
-
-    if (!found) {
-      throw new NotFoundException(`League with ID ${id} not found`);
+    try {
+      return await this.leagueRepository.findOneOrFail(id);
+    } catch (error) {
+      throw new NotFoundException(error, `League with ID ${id} not found`);
     }
-
-    return found;
   }
 
   async createLeague(createLeagueDto: CreateLeagueDto): Promise<League> {

@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateInvitationDto {
   @IsNotEmpty()
-  @IsString()
-  leagueId: string;
+  @IsNumber()
+  leagueId: number;
 
   @IsNotEmpty()
-  @IsString()
-  poolerId: string;
+  @IsNumber()
+  poolerId: number;
 }

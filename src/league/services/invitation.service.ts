@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PoolerRepository } from 'src/pool/repositories/pooler.repository';
 import { CreateInvitationDto } from '../dto/create-invitation.dto';
@@ -60,21 +64,25 @@ export class InvitationService {
   async createInvitation(
     createInvitationDto: CreateInvitationDto,
   ): Promise<void> {
-    const invitation = new Invitation();
+    try {
+      const invitation = new Invitation();
 
-    const { leagueId, poolerId } = createInvitationDto;
+      const { leagueId, poolerId } = createInvitationDto;
 
-    invitation.invitationToken = uuidv4();
+      invitation.invitationToken = uuidv4();
 
-    invitation.league = await this.leagueRepository.findOne(leagueId);
-    invitation.pooler = await this.poolerRepository.findOne(poolerId);
+      invitation.league = await this.leagueRepository.findOne(leagueId);
+      invitation.pooler = await this.poolerRepository.findOne(poolerId);
 
-    invitation.email = invitation.pooler.email;
-    await invitation.save();
+      invitation.email = invitation.pooler.email;
+      await invitation.save();
 
-    await this.mailService.sendPoolerInvitation(
-      invitation.pooler,
-      invitation.invitationToken,
-    );
+      await this.mailService.sendPoolerInvitation(
+        invitation.pooler,
+        invitation.invitationToken,
+      );
+    } catch (error) {
+      throw new BadRequestException(`${error.message} ${error.detail}`);
+    }
   }
 }

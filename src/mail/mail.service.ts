@@ -13,7 +13,7 @@ export class MailService {
       to: pooler.email,
       // from: '"Support Team" <support@example.com>', // override default from
       subject: 'Welcome to Nice App! Confirm your Email',
-      template: 'league-invitation', // `.hbs` extension is appended automatically
+      template: './league-invitation', // `.hbs` extension is appended automatically
       context: {
         // ✏️ filling curly brackets with content
         name: pooler.name,

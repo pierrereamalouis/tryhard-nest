@@ -22,7 +22,6 @@ export class Invitation extends BaseEntity {
 
   @Column({
     type: 'varchar',
-    unique: true,
   })
   email: string;
 

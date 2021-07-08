@@ -26,13 +26,11 @@ export class SeasonService {
   };
 
   async getSeasonById(id: number): Promise<Season> {
-    const found = await this.seasonRepository.findOne(id);
-
-    if (!found) {
-      throw new NotFoundException(`Season with ID ${id} not found`);
+    try {
+      return await this.seasonRepository.findOneOrFail(id);
+    } catch (error) {
+      throw new NotFoundException(error, `Season with ID ${id} not found`);
     }
-
-    return found;
   }
 
   async createSeason(createSeasonDto: CreateSeasonDto): Promise<Season> {

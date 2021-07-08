@@ -9,11 +9,12 @@ import { MailService } from './mail.service';
     MailerModule.forRootAsync({
       useFactory: async () => ({
         transport: {
-          host: 'smpt.example.com',
-          secure: false,
+          host: 'smtp.ethereal.email',
+          port: 587,
+          secure: 'STARTTLS',
           auth: {
-            user: 'user@example.com',
-            pass: 'topsecret',
+            user: 'araceli58@ethereal.email',
+            pass: '9dYtaYeectB5DR8XgB',
           },
         },
         defaults: {
